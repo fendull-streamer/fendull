@@ -82,13 +82,13 @@ class DataInterface:
 
         return "SRS"
 
-    def finish_playing(self):
+    def finish_song(self):
         query = """DELETE FROM requests WHERE STATUS = 'playing'"""
 
         self.conn.cursor().execute(query)
         self.conn.commit()
 
-    def remove_song(self, name, by):
+    def delete_song(self, name, by):
         query = """DELETE FROM songs WHERE NAME = '{}' and BY = '{}'""".format(sanitize(name), sanitize(by))
         self.conn.cursor().execute(query)
         self.conn.commit()
@@ -98,10 +98,22 @@ class DataInterface:
             query = """UPDATE requests SET STATUS = 'playing' WHERE NAME = '{}' AND BY = '{}';""".format(sanitize(name), sanitize(by))
             self.conn.cursor().execute(query)
             self.conn.commit()
+
+            if self.song_exists(name, by):
+                ts = int(datetime.datetime.now(datetime.timezone.utc).timestamp())
+
+                query = """UPDATE songs SET LAST_PLAYED = {} WHERE NAME = '{}' AND BY = '{}';""".format(ts, sanitize(name), sanitize(by))
+                self.conn.cursor().execute(query)
+                self.conn.commit()
     
     def currently_playing(self):
         query = """SELECT * FROM requests WHERE STATUS = 'playing';"""
-        return self.conn.cursor().execute(query).fetchone()
+        
+        data = self.conn.cursor().execute(query).fetchone()
+        
+        if data is None:
+            return ""
+        return list(data)
     
     def list_songs(self):
         query = """SELECT * FROM songs;"""
@@ -112,32 +124,3 @@ class DataInterface:
     def list_requests(self):
         query = """SELECT * FROM requests;"""
         return [list(row) for row in self.conn.cursor().execute(query).fetchall()]
-
-    def get_response(self, command):
-        query = """SELECT RESPONSE FROM commands WHERE NAME = '{}'""".format(command.replace("'", "''"))
-        c = self.conn.cursor().execute(query).fetchall()
-
-        if len(c) > 0:
-            return c[0][0]
-
-        else:
-            return None
-
-    def add_command(self, command, response):
-        if not self.get_response(command) is None:
-            return False
-        query = """INSERT INTO commands (NAME, RESPONSE) VALUES ('{}', '{}');""".format(command.replace("'", "''"), response.replace("'", "''"))
-        c = self.conn.cursor()
-        c.execute(query)
-        self.conn.commit()
-        return True
-
-    def edit_command(self, command, response):
-        if self.get_response(command) is None:
-            return False
-
-        query = """UPDATE commands SET RESPONSE = '{}' WHERE NAME = '{}'""".format(response.replace("'", "''"), command.replace("'", "''"))
-        c = self.conn.cursor()
-        c.execute(query)
-        self.conn.commit()
-        return True

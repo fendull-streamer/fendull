@@ -30,8 +30,8 @@ def finish_song():
     if request.method == 'OPTIONS':
         return preflight(request)
 
-    data = json.dumps(request.data)
-    auth_token = request.args.get(data['auth_token'])
+    data = json.loads(request.data)
+    auth_token = data['auth_token']
 
     try:
         twitch_user_name = get_twitch_user(auth_token)
@@ -61,8 +61,8 @@ def play_song():
         resp.headers['Access-Control-Allow-Origin'] = "*"
         return resp
 
-    data = json.dumps(request.data)
-    auth_token = request.args.get(data['auth_token'])
+    data = json.loads(request.data)
+    auth_token = data['auth_token']
 
     try:
         twitch_user_name = get_twitch_user(auth_token)
@@ -92,8 +92,8 @@ def add_song():
         resp.headers['Access-Control-Allow-Origin'] = "*"
         return resp
 
-    data = json.dumps(request.data)
-    auth_token = request.args.get(data['auth_token'])
+    data = json.loads(request.data)
+    auth_token = data['auth_token']
 
     try:
         twitch_user_name = get_twitch_user(auth_token)
@@ -122,9 +122,9 @@ def delete_song():
         resp = make_response("Proceed", 200)
         resp.headers['Access-Control-Allow-Origin'] = "*"
         return resp
-
-    data = json.dumps(request.data)
-    auth_token = request.args.get(data['auth_token'])
+    print(request.data)
+    data = json.loads(request.data)
+    auth_token = data['auth_token']
 
     try:
         twitch_user_name = get_twitch_user(auth_token)
@@ -154,8 +154,8 @@ def request_song():
         resp.headers['Access-Control-Allow-Origin'] = "*"
         return resp
 
-    data = json.dumps(request.data)
-    auth_token = request.args.get(data['auth_token'])
+    data = json.loads(request.data)
+    auth_token = data['auth_token']
 
     try:
         twitch_user_name = get_twitch_user(auth_token)
@@ -172,6 +172,15 @@ def request_song():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     return resp
 
+@app.route('/nowplaying', methods=['GET'])
+def current_song():
+    d = DataInterface()
+
+    result = d.currently_playing()
+    print(result)
+    if len(result) > 0:
+        return json.dumps(result)
+    return result
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=3033)
