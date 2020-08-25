@@ -42,3 +42,27 @@
     transform: rotate(360deg);
   }
 }
+
+.song-list-table {
+  width: 100%;
+}
+
+.add-song { 
+  margin-bottom: 10vh;
+}
+
+.song-list-row {
+  width: 100%;
+  outline: solid 1px rgb(50,50,50);
+  height: 5vw;
+  font-size: 1.3vw;
+  
+}
+
+.song-list-header {
+  font-weight: bold;
+}
+
+.song-list-row div {
+  text-align: center;
+}

@@ -34,6 +34,16 @@ function getCookie(cname) {
     return "";
 }
 
+
+function delete_cookie( name, path, domain ) {
+    if( getCookie( name ) ) {
+      document.cookie = name + "=" +
+        ((path) ? ";path="+path:"")+
+        ((domain)?";domain="+domain:"") +
+        ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+    }
+  }
+
 export default function TwitchAuth(props) {
     const CLIENT_ID = props.clientId;
     const REDIRECT_URI = props.redirectUri
@@ -41,11 +51,13 @@ export default function TwitchAuth(props) {
     const [idToken, setIdToken] = useState(null);
     const [accessToken, setAccessToken] = useState(null);
     const [idToken64, setIdToken64] = useState(null)
-    
-    
 
+    function reset(){
+        setAuthorized(false);
+        delete_cookie("access_token", "/", "fendull.com")
+        delete_cookie("id_token", "/", "fendull.com")
+    }
     
-
     useEffect(()=>{
         function checkCookies(){
             var access_token = getCookie('access_token');
@@ -87,7 +99,7 @@ export default function TwitchAuth(props) {
     }
 
     const AUTH_URL = buildURL();
-    const authData = {authUrl: AUTH_URL, authorized: authorized, accessToken: accessToken, idToken: idToken, idToken64: idToken64, userInfoUrl: USER_INFO_URL};
+    const authData = {authUrl: AUTH_URL, authorized: authorized, accessToken: accessToken, idToken: idToken, idToken64: idToken64, userInfoUrl: USER_INFO_URL, reset: reset};
     console.log(AUTH_URL)
     return (
         <React.Fragment>
