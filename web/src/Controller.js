@@ -29,7 +29,7 @@ export default function Controller(props) {
                         <Route path="/requestlist">
                             <RequestListPage authData={props.authData} />
                         </Route>
-                        <Route path="/songrequest">
+                        <Route path="/songlist">
                             <SongRequestPage authData={props.authData}/>
                         </Route>
                         <Route path="/code">

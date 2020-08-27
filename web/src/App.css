@@ -51,6 +51,10 @@
   margin-bottom: 10vh;
 }
 
+.twitch-sign-in {
+  text-align: right;
+}
+
 .song-list-row {
   width: 100%;
   outline: solid 1px rgb(50,50,50);
@@ -65,4 +69,22 @@
 
 .song-list-row div {
   text-align: center;
+}
+
+.now-playing-title {
+  font-size: 3vw;
+}
+.now-playing-artist {
+  font-size: 2vw;
+}
+.now-playing-requester {
+  text-align: right;
+}
+
+.now-playing-container {
+  
+  width: 100%;
+  background-color: rgba(0,0,0,0.7);
+  color: white;
+  padding: 1vw;
 }

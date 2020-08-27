@@ -8,33 +8,38 @@ export default function NowPlaying(props){
         
         
         return (
-            <Grid container direction ="column">
+            
                 <Grid container item direction="row" alignItems="center" className="now-playing-row">
-                    <Grid xs={2} item>Title</Grid>
-                    <Grid xs={2} item>Artist</Grid>
-                    <Grid xs={2} item>Requested By</Grid>
+                    <Grid xs={9} item container direction="column" className="title-and-artist">
+                        <Grid item className="now-playing-title">
+                            {info[0]}
+                        </Grid>
+                        <Grid item className="now-playing-artist">
+                            {info[1]}
+                        </Grid>
+                    </Grid>
+                    <Grid xs={2} item className="now-playing-requester">Requested By: {info[3]}</Grid>
                 </Grid>
-                <Grid container item direction="row" alignItems="center" className="now-playing-row">
-                    <Grid xs={2} item>{info[0]}</Grid>
-                    <Grid xs={2} item>{info[1]}</Grid>
-                    <Grid xs={2} item>{info[3]}</Grid>
-                </Grid>
-            </Grid>
+               
+            
         )
     }
     useEffect(() => {
-        fetch("https://srs.fendull.com/nowplaying").then(result => { return result.text()}).then(text =>{
-            console.log(text)
-            if (text){
-                setSongData(JSON.parse(text))
-            }
-
-            
-        })
+        setInterval(() =>{
+            fetch("https://srs.fendull.com/nowplaying").then(result => { return result.text()}).then(text =>{
+                console.log(text)
+                if (text){
+                    setSongData(JSON.parse(text))
+                }
+    
+                
+            })
+        }, 1000)
+       
     }, [])
-    if (songData === null)
-        return <div>Nothing Playing</div>
     return (
-        <SongInfoRow info={songData} />
+        <div className="now-playing-container">
+            {songData !== null ? <SongInfoRow info={songData} /> : "Nothing Playing"}
+        </div>
     )
 }

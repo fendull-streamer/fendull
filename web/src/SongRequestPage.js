@@ -139,6 +139,7 @@ export default function SongRequestPage(props){
 
     return (
         <Container>
+            <div style={{marginBottom: 10}}>
             <Grid container direction="row" className = "add-song" alignItems="center" spacing={2}>
                 <Grid xs={3} item><TextField value={newSongTitle} name="title" onChange={handleChange} variant="outlined" /></Grid>
                 <Grid xs={2} item><TextField value={newSongArtist} name="artist" onChange={handleChange} variant="outlined" /></Grid>
@@ -149,6 +150,7 @@ export default function SongRequestPage(props){
                     {canEdit && <Button onClick={() => {addSong(newSongTitle, newSongArtist, newSongLink, newSongTags, props.authData.accessToken)}}>Add</Button>}
                 </Grid>
             </Grid>
+            </div>
             <Grid container direction="column" className="song-list-table">
                 <Grid container item direction="row" alignItems="center" className="song-list-row song-list-header">
                     <Grid xs={2} item>Title</Grid>
