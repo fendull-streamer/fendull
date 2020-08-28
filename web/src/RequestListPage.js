@@ -59,12 +59,10 @@ export default function SongRequestPage(props){
         const info = props.info;
         const canEdit = (props.authData.idToken != null && props.authData.idToken.preferred_username === "fendull");
         const canRequest = (props.authData.idToken != null);
-        const row_num = props.key;
-        console.log(row_num)
+        
         const color = props.idx % 2 == 0 ? "#dddddd" : "#aaaaaa"
-        console.log(info)
         if (!canEdit && info[5] === "playing"){
-            return
+            return 
         }
         return (
             <Grid container item direction="row" alignItems="center" className="song-list-row" style={{backgroundColor: color}}>
@@ -101,7 +99,9 @@ export default function SongRequestPage(props){
                 </Grid>
                 {songList.map((infoRow, idx) =>{
                     return (
-                        <SongInfoRow key={idx} idx={idx} info={infoRow} authData={props.authData} />
+                        <React.Fragment>
+                            {!(!canEdit && infoRow[5] === "playing" ) && <SongInfoRow key={idx} idx={idx} info={infoRow} authData={props.authData} />}
+                        </React.Fragment>
                     );
                 })}
             </Grid>
