@@ -120,6 +120,8 @@ class DataInterface:
         result = self.conn.cursor().execute(query).fetchall()
         def fix_tags(row):
             row[3] = json.loads(row[3])
+            return row
+            
         return [fix_tags(list(row)) for row in result]
 
     def list_requests(self):
