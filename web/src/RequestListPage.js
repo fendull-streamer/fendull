@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Container, Button, TextField } from '@material-ui/core';
+import { Grid, Container, Button } from '@material-ui/core';
 import FendullUtil from './FendullUtil'
 
 export default function SongRequestPage(props){
@@ -10,7 +10,7 @@ export default function SongRequestPage(props){
 
     function getSongs(){
         fetch("https://srs.fendull.com/requests").then(result => result.json()).then(jsonData => {
-            setSongList(jsonData)
+            setSongList(jsonData);
         });
     }
 
@@ -58,9 +58,8 @@ export default function SongRequestPage(props){
     function SongInfoRow(props){
         const info = props.info;
         const canEdit = (props.authData.idToken != null && props.authData.idToken.preferred_username === "fendull");
-        const canRequest = (props.authData.idToken != null);
         
-        const color = props.idx % 2 == 0 ? "#dddddd" : "#aaaaaa"
+        const color = props.idx % 2 === 0 ? "#dddddd" : "#aaaaaa"
         if (!canEdit && info[5] === "playing"){
             return 
         }
@@ -82,6 +81,7 @@ export default function SongRequestPage(props){
 
     useEffect(() => {
         getSongs();
+        setInterval(getSongs, 3000)
     }, [])
 
     return (

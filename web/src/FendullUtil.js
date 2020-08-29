@@ -8,7 +8,7 @@ export default class FendullUtil {
         d.setUTCSeconds(t);
         var d2 = new Date();
         var diff = (d2 - d) / 1000;
-        console.log(diff);
+        
         if (diff > SECONDS_PER_DAY){
             return Math.floor(diff / SECONDS_PER_DAY).toString() + " day(s) ago";
         }
@@ -18,6 +18,5 @@ export default class FendullUtil {
         }
 
         return Math.floor(diff / SECONDS_PER_MINUTE).toString() + " minute(s) ago";
-        return d.toLocaleDateString() + " " + d.toLocaleTimeString();
     }
 }

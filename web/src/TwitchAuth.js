@@ -100,7 +100,7 @@ export default function TwitchAuth(props) {
 
     const AUTH_URL = buildURL();
     const authData = {authUrl: AUTH_URL, authorized: authorized, accessToken: accessToken, idToken: idToken, idToken64: idToken64, userInfoUrl: USER_INFO_URL, reset: reset};
-    console.log(AUTH_URL)
+    
     return (
         <React.Fragment>
             {React.Children.toArray(props.children).map((child) =>{
