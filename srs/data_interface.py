@@ -118,8 +118,9 @@ class DataInterface:
     def list_songs(self):
         query = """SELECT * FROM songs;"""
         result = self.conn.cursor().execute(query).fetchall()
-
-        return [list(row) for row in result]
+        def fix_tags(row):
+            row[3] = json.loads(row[3])
+        return [fix_tags(list(row)) for row in result]
 
     def list_requests(self):
         query = """SELECT * FROM requests;"""
