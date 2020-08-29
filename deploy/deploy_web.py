@@ -1,8 +1,11 @@
 import boto3
 import os
+from cf_invalidate import perform_invalidation
 
 BUCKET_POLICY = """{"Version": "2012-10-17","Statement": [{"Sid": "PublicReadGetObject","Effect": "Allow","Principal": "*","Action": "s3:GetObject","Resource": "arn:aws:s3:::freedom-generator/*"}]}"""
 BUCKET_NAME = 'fendull-website'
+DOMAIN_NAME = "fendull.com"
+
 s3_client = boto3.client('s3')
 s3 = boto3.resource('s3')
 b = s3.Bucket(BUCKET_NAME)
@@ -38,5 +41,6 @@ for root, directories, filenames in os.walk('../web/build'):
             g.close()
         else:
             b.upload_file(f, f.replace('\\', '/').replace('../web/build/',''))
-
+            
+perform_invalidation(DOMAIN_NAME)
 print('Web is now hosted at http://{}.s3-website-us-east-1.amazonaws.com/'.format(BUCKET_NAME))

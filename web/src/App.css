@@ -8,6 +8,10 @@
   margin-bottom: 2vw;
 }
 
+.header-link {
+  text-decoration: none;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

@@ -17,7 +17,9 @@
     "start": "react-app-env --env-file=config/test.env start",
     "build": "react-app-env --env-file=config/production.env build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy": "node deploy-web.js"
+
   },
   "eslintConfig": {
     "extends": "react-app"
