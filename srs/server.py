@@ -8,6 +8,9 @@ app = Flask(__name__)
 def get_twitch_user(auth_token):
     return json.loads(requests.get("https://id.twitch.tv/oauth2/userinfo", headers={"Authorization": "Bearer {}".format(auth_token)}).content)["preferred_username"]
 
+def get_use_from_id_token():
+    pass
+
 def preflight(request):
    resp = make_response("Proceed", 200)
    resp.headers['Access-Control-Allow-Origin'] = "*"

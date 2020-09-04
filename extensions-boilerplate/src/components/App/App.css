@@ -1,0 +1,92 @@
+.App {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    margin-right: 7rem;
+    text-align: center;
+    max-width: 35%;
+    padding-left: 1rem;
+    max-height: 50vh;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+    pointer-events: none;
+  }
+  .menu-row {
+    background-color: rgba(85, 2, 85, 0.5);
+    color: rgba(255,255,255, 0.8);
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    .App-logo {
+      animation: App-logo-spin infinite 20s linear;
+    }
+  }
+  
+  
+  
+  .song-list-table {
+    width: 100%;
+    overflow-y: scroll;
+    max-height: 60vh;
+  }
+  
+  .song-list-row {
+    width: 100%;
+    outline: solid 1px rgba(194, 46, 240, 0.5);
+    height: 5vw;
+    font-size: 1vw;
+    
+  }
+  
+  .song-list-header {
+    font-weight: bold;
+  }
+  
+  .song-list-row div {
+    text-align: center;
+  }
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  }
+  
+  .App-link {
+    color: #61dafb;
+  }
+  
+  @keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  /* width */
+  .song-list-table::-webkit-scrollbar {
+    width: 1vw;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #23012e;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(158, 50, 230);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
