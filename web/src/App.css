@@ -92,3 +92,18 @@
   color: white;
   padding: 1vw;
 }
+
+.tile-game-row{
+  
+  
+  
+  
+}
+.tile-game-cell {
+  
+  width: 3vw;
+  height: 3vw;
+  font-size: 0.5rem;
+  border: 1px solid black;
+  
+}
