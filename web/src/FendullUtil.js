@@ -10,13 +10,16 @@ export default class FendullUtil {
         var diff = (d2 - d) / 1000;
         
         if (diff > SECONDS_PER_DAY){
-            return Math.floor(diff / SECONDS_PER_DAY).toString() + " day(s) ago";
+            let days = Math.floor(diff / SECONDS_PER_DAY);
+            return days == 1 ? "1 day ago" : days.toString() + " days ago";
         }
 
         if (diff > SECONDS_PER_HOUR) {
-            return Math.floor(diff / SECONDS_PER_HOUR).toString() + " hour(s) ago";
+            let hours = Math.floor(diff / SECONDS_PER_HOUR);
+            return hours == 1 ? "1 hour ago" : hours.toString() + " hours ago";
         }
 
-        return Math.floor(diff / SECONDS_PER_MINUTE).toString() + " minute(s) ago";
+        let minutes = Math.floor(diff / SECONDS_PER_MINUTE);
+        return minutes == 1 ? "1 minute ago" : minutes.toString() + " minutes ago";
     }
 }
