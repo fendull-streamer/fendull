@@ -158,36 +158,29 @@ export default function SongRequestPage(props){
     }
     function Tag(props) {
         return (
-        <Chip
-                variant="outlined"
-                label={props.label}
-        />);
+            <span>label={props.label}</span>
+        );
     }
 
     function SongInfoRow(props){
         const info = props.info;
         const canEdit = (props.authData.idToken != null && props.authData.idToken.preferred_username === "fendull");
         const canRequest = (props.authData.idToken != null);
-        
-        const color = props.idx % 2 === 0 ? "#dddddd" : "#aaaaaa"
-        
-        
+
         return (
-            <Grid container item direction="row" alignItems="center" className="song-list-row" style={{backgroundColor: color}}>
-                {canEdit ? <Grid xs={2} item onClick={()=>{editSong(props.info)}}>{info[0]}</Grid> : <Grid xs={2} item>{info[0]}</Grid>}
-                <Grid xs={2} item>{info[1]}</Grid>
-                <Grid xs={2} item><a href={info[2]}>Sheet Music</a></Grid>
-                <Grid xs={2} item>{info[3].map((tag) => {
-                    return (<Tag label={tag}/>)
-                })}</Grid>
-                <Grid xs={2} item>{FendullUtil.timeSince(info[4])}</Grid>
-                <Grid item xs={1} >
+            <div className="song-list-row">
+                {canEdit ? <div className="title" onClick={()=>{editSong(props.info)}}>{info[0]}</div> : <div className="title">{info[0]}</div>}
+                <div className="artist">{info[1]}</div>
+                <div className="sheet"><a href={info[2]}>Sheet Music</a></div>
+                <div className="tags">{info[3].map((tag) => {
+                    return (<span className="tag">{tag}</span>)
+                })}</div>
+                <div className="played">{FendullUtil.timeSince(info[4])}</div>
+                <div className="actions">
                     {canRequest && <Button onClick={() => {requestSong(info[0], info[1], props.authData.accessToken)}} disabled={props.disabled}>Request</Button>}
-                </Grid>
-                <Grid xs={1} item>
                     {canEdit && <Button onClick={() => {deleteSong(info[0], info[1], props.authData.accessToken)}}>Delete</Button>}
-                </Grid> 
-            </Grid>
+                </div> 
+            </div>
         )
     }
 
@@ -221,24 +214,21 @@ export default function SongRequestPage(props){
                 </Grid>
             </Grid>
             </div>
-            <Grid container direction="column" className="song-list-table">
-                <Grid container item direction="row" alignItems="center" className="song-list-row song-list-header">
-                    <Grid xs={2} item>Title</Grid>
-                    <Grid xs={2} item>Artist</Grid>
-                    <Grid xs={2} item>Sheet Music Link</Grid>
-                    <Grid xs={2} item>Tags</Grid>
-                    <Grid xs={2} item>Last Played</Grid>
-                    <Grid item xs={2} >
-                        Actions
-                    </Grid>
-                </Grid>
+            <div className="song-list-table">
+                <div className="song-list-row song-list-header">
+                    <div className="title">Title</div>
+                    <div className="artist">Artist</div>
+                    <div className="sheet">Sheet Music</div>
+                    <div className="tags">Tags</div>
+                    <div className="played">Last Played</div>
+                    <div className="actions">Actions</div>
+                </div>
                 {songList.map((infoRow, idx) =>{
                     return (
-
                         <SongInfoRow key={idx} idx={idx} info={infoRow} authData={props.authData} disabled={isInRequests(infoRow)} />
                     );
                 })}
-            </Grid>
+            </div>
         </Container>
     )
 }
