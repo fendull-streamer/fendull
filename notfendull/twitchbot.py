@@ -90,7 +90,7 @@ class TwitchBot:
                 try:
                     while not buffer_ready(buffer) is True and self.is_running is True:
                         self.socket.settimeout(10) 
-                        buffer += self.socket.recv(1)
+                        buffer += self.socket.recv(4096)
                         
                     if len(buffer) > 1:
                         self.handle_message(buffer[:-2])
