@@ -48,14 +48,17 @@ export default function EditContent(props) {
             tempSave()
             }}>Toggle Mode</Button>
         <Button variant="filled" onClick={()=>{
-            const URL = "http://localhost:3011/setpage?id_token="+props.auth.idToken64 + "&title=" + title
-            fetch(URL, {body: markdown, method: "POST"}).then(result => {
-                if (result.status > 400){
+            const URL = "https://api.fendull.com/save"
+            fetch(URL, {body: JSON.stringify({content: markdown, key: title, accessToken: props.auth.accessToken}), method: "POST"}).then(result => {
+                if (result.status === 400){
                     throw "Invalid auth"
+                }
+                if (result.status === 500) {
+                    throw "Failed to save"
                 }
                 return result.text()}).then(key => {
 
-                window.location.replace("/page?key=" + key);
+                window.location.replace("/page?key=" + title);
             }).catch(err => {
                 console.log(err)
                 setCookie('page', 'editpage')

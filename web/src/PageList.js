@@ -5,8 +5,9 @@ export default function PageList(props) {
     const [pages, setPages] = useState([]);
 
     useEffect(()=>{
-        fetch("http://localhost:3011/pages").then(result => result.json()).then(
+        fetch("https://api.fendull.com/listPages").then(result => result.json()).then(
             jsonData => {
+                console.log(jsonData)
                 setPages(jsonData)
             }
         )
@@ -16,7 +17,7 @@ export default function PageList(props) {
     function PageRow(props){
         return(
             <Grid item>
-                <a href={"http://localhost:3000/page?key=" + props.data[0]}>{props.data[1]}</a>
+                <a href={"/page?key=" + props.data}>{props.data}</a>
             </Grid>
         )
         
@@ -24,11 +25,13 @@ export default function PageList(props) {
     return (
         <Container>
             <Grid direction="column" justifyContent="left">
-                {pages.map((page) => {
+                
+                {pages.length > 0 ? pages.map((page) => {
+                    console.log(page)
                     return (
                         <PageRow data={page} />
                     )
-                })}
+                }) : "Loading Pages..."}
             </Grid>
         </Container>
     )
